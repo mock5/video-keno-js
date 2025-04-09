@@ -1,0 +1,58 @@
+.game-rules {
+  margin-bottom: 20px;
+}
+
+.rules-toggle {
+  background-color: #f5f7fa;
+  color: #333;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  padding: 10px 15px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  width: 100%;
+}
+
+.rules-toggle:hover {
+  background-color: #e8f0fe;
+}
+
+.rules-content {
+  background-color: #ffffff;
+  border-radius: 8px;
+  padding: 20px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  margin-top: 10px;
+  color: #333;
+  animation: fadeIn 0.3s;
+}
+
+.rules-content h2 {
+  color: #4a90e2;
+  margin-top: 0;
+}
+
+.rules-content h3 {
+  color: #4a90e2;
+}
+
+.rules-content ol, .rules-content ul {
+  padding-left: 20px;
+  line-height: 1.6;
+}
+
+.rules-content li {
+  margin-bottom: 8px;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

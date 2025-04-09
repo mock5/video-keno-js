@@ -1,0 +1,87 @@
+.game-history {
+  margin-bottom: 20px;
+}
+
+.history-toggle {
+  background-color: #f5f7fa;
+  color: #333;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  padding: 10px 15px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  width: 100%;
+}
+
+.history-toggle:hover {
+  background-color: #e8f0fe;
+}
+
+.history-content {
+  background-color: #ffffff;
+  border-radius: 8px;
+  padding: 20px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  margin-top: 10px;
+  color: #333;
+  animation: fadeIn 0.3s;
+  max-height: 400px;
+  overflow-y: auto;
+}
+
+.history-content h2 {
+  color: #4a90e2;
+  margin-top: 0;
+  text-align: center;
+}
+
+.history-list {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.history-item {
+  background-color: #f5f7fa;
+  border-radius: 6px;
+  padding: 15px;
+  position: relative;
+  border: 1px solid #ddd;
+}
+
+.history-game-number {
+  position: absolute;
+  top: -10px;
+  left: 10px;
+  background-color: #4a90e2;
+  color: white;
+  padding: 2px 8px;
+  border-radius: 10px;
+  font-size: 0.8rem;
+  font-weight: bold;
+}
+
+.history-details {
+  margin-top: 10px;
+}
+
+.history-details p {
+  margin: 5px 0;
+}
+
+.win {
+  color: #ffc107; /* Amber color that complements the gold */
+  font-weight: bold;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

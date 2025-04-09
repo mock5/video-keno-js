@@ -1,0 +1,174 @@
+/* Casino-style Keno Board */
+.keno-board.casino-style {
+  background-color: #000000;
+  padding: 5px;
+  margin-bottom: 10px;
+}
+
+.keno-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.keno-row {
+  display: flex;
+  gap: 2px;
+}
+
+.keno-number {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 50px;
+  height: 40px;
+  background-color: #0000ff; /* Blue background */
+  color: #ffd700; /* Gold text */
+  border: 1px solid #ffd700;
+  font-size: 1.2rem;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  user-select: none;
+}
+
+/* Row-specific colors for the casino look */
+.keno-row.row-1 .keno-number,
+.keno-row.row-3 .keno-number,
+.keno-row.row-5 .keno-number,
+.keno-row.row-7 .keno-number {
+  background-color: #0000ff; /* Blue background */
+  color: #ffd700; /* Gold text */
+}
+
+.keno-row.row-2 .keno-number,
+.keno-row.row-4 .keno-number,
+.keno-row.row-6 .keno-number,
+.keno-row.row-8 .keno-number {
+  background-color: #0000ff; /* Blue background */
+  color: #ffd700; /* Gold text */
+}
+
+.keno-number:hover {
+  opacity: 0.9;
+}
+
+.keno-number.selected {
+  background-color: #ff0000; /* Red background for selected */
+  color: #ffd700; /* Gold text */
+  border-color: #ff0000;
+  position: relative;
+}
+
+/* Add checkmark to selected numbers */
+.keno-number.selected::after {
+  content: ' ✓';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 1.5rem;
+  color: #000;
+  font-weight: bold;
+  border-radius: 50%;
+  width: 27px;
+  height: 30px;
+  background: white;
+  margin-left: auto;
+  margin-right: auto;
+  display: block;
+  padding-left: 3px;
+}
+
+.keno-number.drawn {
+  background-color: #ff0000!important; /* Yellow background for drawn numbers */
+  color: #000000; /* Black text */
+  border-color: #ffd700;
+  transition: all 0.3s ease;
+}
+
+.keno-number.match {
+  background-color: #ff0000!important; /* Yellow gold background */
+  color: #000000; /* Black text */
+  border-color: #ffd700;
+  transition: all 0.3s ease;
+}
+
+/* Animation for the currently drawing number */
+.keno-number.drawing-animation {
+  animation: drawing-pulse 0.8s infinite;
+  z-index: 10;
+  box-shadow: 0 0 15px rgba(255, 215, 0, 0.8); /* Yellow glow */
+}
+
+/* Animation for when a number is first drawn */
+@keyframes drawing-pulse {
+  0% {
+    transform: scale(1);
+    background-color: #ffd700; /* Yellow background */
+    color: #000000; /* Black text */
+  }
+  50% {
+    transform: scale(1.15);
+    background-color: #ffd700; /* Yellow background */
+    color: #000000; /* Black text */
+    box-shadow: 0 0 20px rgba(255, 215, 0, 0.9);
+  }
+  100% {
+    transform: scale(1);
+    background-color: #ffd700; /* Yellow background */
+    color: #000000; /* Black text */
+  }
+}
+
+/* Animation for when a match is found */
+.keno-number.match.drawing-animation {
+  animation: match-drawing-pulse 0.8s infinite;
+  z-index: 10;
+  box-shadow: 0 0 15px rgba(255, 215, 0, 0.8);
+}
+
+@keyframes match-drawing-pulse {
+  0% {
+    transform: scale(1);
+    background-color: #ffd700;
+    color: #000000;
+  }
+  50% {
+    transform: scale(1.15);
+    background-color: #ffd700;
+    color: #000000;
+    box-shadow: 0 0 20px rgba(255, 215, 0, 0.9);
+  }
+  100% {
+    transform: scale(1);
+    background-color: #ffd700;
+    color: #000000;
+  }
+}
+
+/* Checkmark buttons on the right side */
+.keno-row .keno-number:nth-child(11),
+.keno-row .keno-number:nth-child(12),
+.keno-row .keno-number:nth-child(13) {
+  background-color: #ffffff;
+  color: #0000ff;
+  border-radius: 50%;
+  font-size: 1rem;
+}
+
+@media (max-width: 768px) {
+  .keno-number {
+    width: 30px;
+    height: 30px;
+    font-size: 1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .keno-number {
+    width: 25px;
+    height: 25px;
+    font-size: 0.9rem;
+  }
+}

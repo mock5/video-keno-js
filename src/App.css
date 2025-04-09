@@ -1,0 +1,251 @@
+body {
+  margin: 0;
+  padding: 0;
+  font-family: 'Arial', sans-serif;
+  background-color: #000000;
+  color: #ffffff;
+}
+
+#root {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+/* Casino-style Keno layout */
+.keno-app.casino-style {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 10px;
+  background-color: #000000;
+}
+
+.game-container {
+  display: flex;
+  flex: 1;
+  justify-content: center;
+}
+
+.keno-main-layout {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  gap: 10px;
+}
+
+/* Top section with ball animation and stats */
+.keno-top-section {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #000000;
+  padding: 10px;
+  border-bottom: 2px solid #444;
+}
+
+.ball-animation-container {
+  width: 100px;
+  height: 100px;
+}
+
+.ball-cage {
+  width: 100%;
+  height: 100%;
+  background-image: url('https://store-images.s-microsoft.com/image/apps.63906.14223581076383840.2abb7aee-d775-4d65-8cea-0bd6a8cee5f2.7fbf73b9-c098-4667-8b99-b4a910f640cf?mode=scale&q=90&h=200&w=200&background=%23ED1C24');
+  background-size: contain;
+  background-repeat: no-repeat;
+}
+
+.game-stats {
+  display: flex;
+  gap: 20px;
+}
+
+.marked-display, .hit-display, .win-display {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-width: 80px;
+}
+
+.stat-label {
+  font-size: 0.9rem;
+  font-weight: bold;
+  color: #ffffff;
+  background-color: #000000;
+  padding: 2px 8px;
+  width: 100%;
+  text-align: center;
+}
+
+.stat-value {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #ffffff;
+  background-color: #0000ff; /* Blue background */
+  width: 100%;
+  text-align: center;
+  padding: 5px 0;
+  transition: all 0.3s ease;
+}
+
+.stat-value.max-reached {
+  background-color: #ff0000; /* Red background when max selections reached */
+  animation: pulse 1s infinite;
+}
+
+@keyframes pulse {
+  0% { opacity: 1; }
+  50% { opacity: 0.7; }
+  100% { opacity: 1; }
+}
+
+.win-display .stat-value {
+  color: #ffd700; /* Gold color for win amount */
+}
+
+/* Middle section with payout table and keno board */
+.keno-middle-section {
+  display: flex;
+  gap: 10px;
+}
+
+.payout-section {
+  flex: 1;
+  max-width: 200px;
+}
+
+.board-section {
+  flex: 3;
+}
+
+/* Bottom section with game controls */
+.keno-bottom-section {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  background-color: #000000;
+  padding: 10px;
+  border-top: 2px solid #444;
+}
+
+.game-controls {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+}
+
+.speed-btn {
+  background-color: #333;
+  color: #ffd700;
+  border: none;
+  padding: 8px 15px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  width: 110px;
+}
+
+.speed-btn.speed-level-1 {
+  color: rgb(230, 230, 0); /* Green for slow speed */
+}
+
+.speed-btn.speed-level-2 {
+  color: #eded00; /* Yellow for medium speed */
+}
+
+.speed-btn.speed-level-3 {
+  color: #ffff00; /* Red for fast speed */
+}
+
+.bet-controls {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.bet-amount {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.bet-label {
+  font-size: 0.9rem;
+  font-weight: bold;
+  color: #ffffff;
+}
+
+.bet-value {
+  font-size: 1.2rem;
+  font-weight: bold;
+  color: #ffd700;
+  transition: all 0.3s ease;
+}
+
+.bet-value.max-bet {
+  animation: bet-pulse 1s infinite;
+}
+
+@keyframes bet-pulse {
+  0% { color: #ffd700; }
+  50% { color: #ff0000; }
+  100% { color: #ffd700; }
+}
+
+.credits-display {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.credit-label {
+  font-size: 0.9rem;
+  font-weight: bold;
+  color: #ffffff;
+}
+
+.credit-value {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #ffd700;
+}
+
+.start-btn {
+  background-color: #ff0000;
+  color: #ffffff;
+  border: none;
+  padding: 10px 20px;
+  font-size: 1.2rem;
+  font-weight: bold;
+  cursor: pointer;
+  min-width: 100px;
+}
+
+.start-btn:disabled {
+  background-color: #555;
+  cursor: not-allowed;
+}
+
+.auto-play-controls {
+  display: flex;
+  justify-content: center;
+}
+
+@media (max-width: 768px) {
+  .keno-middle-section {
+    flex-direction: column;
+  }
+
+  .payout-section {
+    max-width: 100%;
+  }
+
+  .game-controls {
+    flex-wrap: wrap;
+  }
+}

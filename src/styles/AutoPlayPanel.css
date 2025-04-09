@@ -1,0 +1,148 @@
+/* Casino-style Auto Play Panel */
+.auto-play-panel.casino-style {
+  background-color: #000000;
+  color: #ffffff;
+  border: 1px solid #333;
+  padding: 10px;
+  width: 100%;
+}
+
+.auto-play-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+  border-bottom: 1px solid #333;
+  padding-bottom: 5px;
+}
+
+.auto-play-header span {
+  font-weight: bold;
+  color: #ffd700;
+}
+
+.speed-label {
+  font-size: 0.9rem;
+}
+
+.auto-play-controls {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.count-options {
+  display: flex;
+  gap: 5px;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+
+.count-options button {
+  background-color: #333;
+  color: #ffd700;
+  border: 1px solid #ffd700;
+  padding: 5px 10px;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  flex: 1;
+}
+
+.count-options button:hover:not(:disabled) {
+  background-color: #444;
+}
+
+.count-options button.active {
+  background-color: #0000ff;
+  color: #ffd700;
+  border-color: #ffd700;
+}
+
+.count-options button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.auto-play-delay input[type="range"] {
+  width: 100%;
+  margin: 8px 0;
+  -webkit-appearance: none;
+  height: 8px;
+  border-radius: 4px;
+  background: #333;
+  outline: none;
+}
+
+.auto-play-delay input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: #ffd700;
+  cursor: pointer;
+}
+
+.auto-play-delay input[type="range"]::-moz-range-thumb {
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: #ffd700;
+  cursor: pointer;
+  border: none;
+}
+
+.auto-play-delay input[type="range"]:disabled {
+  opacity: 0.5;
+}
+
+.start-auto-play, .stop-auto-play {
+  background-color: #ff0000;
+  color: #ffffff;
+  border: none;
+  padding: 8px 15px;
+  font-size: 0.9rem;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  width: 100%;
+}
+
+.start-auto-play:hover:not(:disabled), .stop-auto-play:hover {
+  background-color: #cc0000;
+}
+
+.start-auto-play:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  background-color: #555;
+}
+
+.auto-play-active {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+}
+
+.auto-play-status {
+  font-weight: bold;
+  color: #ffd700;
+}
+
+.stop-auto-play {
+  background-color: #ff0000;
+  min-width: 80px;
+}
+
+@media (max-width: 480px) {
+  .auto-play-active {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .stop-auto-play {
+    width: 100%;
+  }
+}
