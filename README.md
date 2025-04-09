@@ -85,9 +85,9 @@ This project is a faithful recreation of the classic Las Vegas video keno game f
 
 - **SPEED**: Controls the drawing animation speed
 
-  - Level 1 (Green >): Slow drawing speed
-  - Level 2 (Yellow >>): Medium drawing speed
-  - Level 3 (Red >>>): Fast drawing speed
+  - Level 1: Slow drawing speed
+  - Level 2: Medium drawing speed
+  - Level 3: Fast drawing speed
 
 - **AUTO PLAY**: Automatically plays multiple games
   - Select the number of games (5, 10, 25, 50, or 100)
