@@ -50,3 +50,20 @@
   font-size: 1.1rem;
   color: #ffd700; /* Gold color for win amount */
 }
+
+/* Highlight for the winning row */
+.payout-row.winning-row {
+  background-color: #ffff00; /* Yellow background */
+  animation: pulse-highlight 1.5s infinite alternate;
+}
+
+.payout-row.winning-row .payout-catch,
+.payout-row.winning-row .payout-amount {
+  color: #000000; /* Black text for better contrast on yellow */
+  font-weight: bold;
+}
+
+@keyframes pulse-highlight {
+  from { background-color: #ffff00; } /* Yellow */
+  to { background-color: #ffa500; } /* Orange */
+}

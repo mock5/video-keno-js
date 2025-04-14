@@ -187,6 +187,8 @@ function App() {
               <PayoutTable
                 spotCount={maxSelections}
                 betAmount={betAmount}
+                matches={matches}
+                gameState={gameState}
               />
             </div>
 
