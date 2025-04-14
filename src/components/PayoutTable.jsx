@@ -1,6 +1,7 @@
 import '../styles/PayoutTable.css';
+import { GAME_STATES } from '../utils/gameConstants';
 
-const PayoutTable = ({ spotCount, betAmount }) => {
+const PayoutTable = ({ spotCount, betAmount, matches, gameState }) => {
   // Payout tables based on the number of spots selected
   const payoutTables = {
     1: { 1: 3 },
@@ -25,12 +26,17 @@ const PayoutTable = ({ spotCount, betAmount }) => {
         <div className="payout-title">WIN</div>
       </div>
       <div className="payout-content">
-        {Object.entries(currentPayoutTable).map(([catch_count, multiplier]) => (
-          <div key={catch_count} className="payout-row">
-            <div className="payout-catch">{catch_count}</div>
-            <div className="payout-amount">{multiplier * betAmount}</div>
-          </div>
-        ))}
+        {Object.entries(currentPayoutTable).map(([catch_count, multiplier]) => {
+          // Check if this row should be highlighted (matches the current win)
+          const isWinningRow = gameState === GAME_STATES.RESULTS && parseInt(catch_count) === matches;
+
+          return (
+            <div key={catch_count} className={`payout-row ${isWinningRow ? 'winning-row' : ''}`}>
+              <div className="payout-catch">{catch_count}</div>
+              <div className="payout-amount">{multiplier * betAmount}</div>
+            </div>
+          );
+        })}
       </div>
     </div>
   );

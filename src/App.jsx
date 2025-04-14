@@ -4,32 +4,38 @@ import './App.css';
 // Import components
 import KenoBoard from './components/KenoBoard';
 import BetPanel from './components/BetPanel';
-import ResultsDisplay from './components/ResultsDisplay';
 import PayoutTable from './components/PayoutTable';
-import GameRules from './components/GameRules';
-import GameHistory from './components/GameHistory';
 import AutoPlayPanel from './components/AutoPlayPanel';
 
 // Import utilities
 import { generateDrawnNumbers, generateQuickPick, calculateMatches, calculatePayout } from './utils/gameUtils';
 
+// Import constants
+import {
+  MAX_SELECTABLE_SPOTS,
+  DRAWN_SPOTS_COUNT,
+  MAX_BET_AMOUNT,
+  DEFAULT_CREDITS,
+  DRAWING_SPEEDS,
+  GAME_STATES,
+  AUTO_PLAY_DELAY
+} from './utils/gameConstants';
+
 function App() {
   // Game state
-  const [gameState, setGameState] = useState('idle'); // idle, playing, results
+  const [gameState, setGameState] = useState(GAME_STATES.IDLE);
   const [selectedNumbers, setSelectedNumbers] = useState([]);
   const [drawnNumbers, setDrawnNumbers] = useState([]);
   const [betAmount, setBetAmount] = useState(1);
-  const [credits, setCredits] = useState(100);
+  const [credits, setCredits] = useState(DEFAULT_CREDITS);
   const [matches, setMatches] = useState(0);
   const [payout, setPayout] = useState(0);
-  const [maxSelections, setMaxSelections] = useState(10);
-  const [gameHistory, setGameHistory] = useState([]);
+  const [maxSelections, setMaxSelections] = useState(MAX_SELECTABLE_SPOTS);
   const [drawingSpeed, setDrawingSpeed] = useState(1); // 1=slow, 2=medium, 3=fast
 
   // Auto-play state
   const [isAutoPlaying, setIsAutoPlaying] = useState(false);
   const [autoPlayCount, setAutoPlayCount] = useState(0);
-  const autoPlayDelay = 1; // Fixed at 1 second
 
   // Use refs to track current values in callbacks
   const isAutoPlayingRef = useRef(false);
@@ -53,7 +59,7 @@ function App() {
 
   // Handle Play button click
   const handlePlay = () => {
-    if (selectedNumbers.length === 0 || gameState === 'playing' || credits < betAmount) {
+    if (selectedNumbers.length === 0 || gameState === GAME_STATES.PLAYING || credits < betAmount) {
       return;
     }
 
@@ -61,7 +67,7 @@ function App() {
     setCredits(credits - betAmount);
 
     // Set game state to playing
-    setGameState('playing');
+    setGameState(GAME_STATES.PLAYING);
 
     // Clear previous drawn numbers and reset win value
     setDrawnNumbers([]);
@@ -75,8 +81,11 @@ function App() {
     // The KenoBoard component will handle the animation of drawing numbers
     // We'll wait for the animation to complete (approximately)
     // Calculate animation duration based on drawing speed
-    const drawingInterval = drawingSpeed === 1 ? 200 : drawingSpeed === 2 ? 100 : 50;
-    const animationDuration = drawingInterval * 20 + 1000; // ms per number (20 numbers) + 1 second buffer
+    const drawingInterval =
+      drawingSpeed === 1 ? DRAWING_SPEEDS.SLOW :
+      drawingSpeed === 2 ? DRAWING_SPEEDS.MEDIUM :
+      DRAWING_SPEEDS.FAST;
+    const animationDuration = drawingInterval * DRAWN_SPOTS_COUNT + 1000; // ms per number + 1 second buffer
 
     // After animation completes, show results and handle payouts
     setTimeout(() => {
@@ -90,20 +99,8 @@ function App() {
       // Add payout to credits
       setCredits(prev => prev + payoutAmount);
 
-      // Add game to history
-      setGameHistory(prev => [
-        {
-          selectedNumbers: [...selectedNumbers],
-          drawnNumbers: [...drawn],
-          matches: matchCount,
-          betAmount,
-          payout: payoutAmount
-        },
-        ...prev
-      ]);
-
       // Set game state to results
-      setGameState('results');
+      setGameState(GAME_STATES.RESULTS);
 
       // If auto-play is active, schedule the next game
       if (isAutoPlayingRef.current && autoPlayCountRef.current > 0) {
@@ -119,7 +116,7 @@ function App() {
           } else {
             setIsAutoPlaying(false);
           }
-        }, autoPlayDelay * 1000);
+        }, AUTO_PLAY_DELAY * 1000);
       } else if (autoPlayCountRef.current === 0 && isAutoPlayingRef.current) {
         setIsAutoPlaying(false);
       }
@@ -128,7 +125,7 @@ function App() {
 
   // Handle auto-play start
   const handleAutoPlayStart = (count) => {
-    if (gameState !== 'playing' && selectedNumbers.length > 0 && credits >= betAmount) {
+    if (gameState !== GAME_STATES.PLAYING && selectedNumbers.length > 0 && credits >= betAmount) {
       // Set both state and ref
       setAutoPlayCount(count);
       autoPlayCountRef.current = count;
@@ -190,6 +187,8 @@ function App() {
               <PayoutTable
                 spotCount={maxSelections}
                 betAmount={betAmount}
+                matches={matches}
+                gameState={gameState}
               />
             </div>
 
@@ -218,7 +217,7 @@ function App() {
               <div className="bet-controls">
                 <div className="bet-amount">
                   <div className="bet-label">BET</div>
-                  <div className={`bet-value ${betAmount === 10 ? 'max-bet' : ''}`}>{betAmount}</div>
+                  <div className={`bet-value ${betAmount === MAX_BET_AMOUNT ? 'max-bet' : ''}`}>{betAmount}</div>
                 </div>
 
                 <BetPanel
@@ -226,9 +225,7 @@ function App() {
                   setBetAmount={setBetAmount}
                   selectedNumbers={selectedNumbers}
                   setSelectedNumbers={setSelectedNumbers}
-                  maxSelections={maxSelections}
                   setMaxSelections={setMaxSelections}
-                  onPlay={handlePlay}
                   gameState={gameState}
                   credits={credits}
                   onQuickPick={handleQuickPick}
@@ -246,7 +243,7 @@ function App() {
               <button
                 className="start-btn"
                 onClick={handlePlay}
-                disabled={gameState === 'playing' || selectedNumbers.length === 0 || credits < betAmount}
+                disabled={gameState === GAME_STATES.PLAYING || selectedNumbers.length === 0 || credits < betAmount}
               >
                 START
               </button>

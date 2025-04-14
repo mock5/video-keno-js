@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef } from 'react';
 import '../styles/KenoBoard.css';
+import { MAX_SELECTABLE_SPOTS, DRAWING_SPEEDS, GAME_STATES } from '../utils/gameConstants';
 
 const KenoBoard = ({
   selectedNumbers,
@@ -27,21 +28,23 @@ const KenoBoard = ({
     }
 
     // Reset animated numbers when game state changes
-    if (gameState !== 'playing') {
+    if (gameState !== GAME_STATES.PLAYING) {
       setAnimatedDrawnNumbers([]);
       setIsDrawing(false);
       return;
     }
 
     // Start animation when game state is 'playing'
-    if (gameState === 'playing' && drawnNumbers.length > 0) {
+    if (gameState === GAME_STATES.PLAYING && drawnNumbers.length > 0) {
       setIsDrawing(true);
       setAnimatedDrawnNumbers([]);
 
       let currentIndex = 0;
       // Set drawing interval based on speed level
-      // Level 1 (slow): 200ms, Level 2 (medium): 100ms, Level 3 (fast): 50ms
-      const drawingInterval = drawingSpeed === 1 ? 200 : drawingSpeed === 2 ? 100 : 50;
+      const drawingInterval =
+        drawingSpeed === 1 ? DRAWING_SPEEDS.SLOW :
+        drawingSpeed === 2 ? DRAWING_SPEEDS.MEDIUM :
+        DRAWING_SPEEDS.FAST;
 
       // Animate drawing numbers one by one
       drawingTimerRef.current = setInterval(() => {
@@ -67,7 +70,7 @@ const KenoBoard = ({
 
   const handleNumberClick = (number) => {
     // Only allow selection if game is not in progress
-    if (gameState === 'playing') return;
+    if (gameState === GAME_STATES.PLAYING) return;
 
     if (selectedNumbers.includes(number)) {
       // If number is already selected, remove it
@@ -78,13 +81,13 @@ const KenoBoard = ({
       if (newSelectedNumbers.length > 0) {
         setMaxSelections(newSelectedNumbers.length);
       } else {
-        // If no numbers are selected, set maxSelections to 10 (default)
-        setMaxSelections(10);
+        // If no numbers are selected, set maxSelections to default
+        setMaxSelections(MAX_SELECTABLE_SPOTS);
       }
     } else {
-      // If number is not selected, check if we've reached the max of 10
-      if (selectedNumbers.length >= 10) {
-        // Already have 10 numbers selected, don't add more
+      // If number is not selected, check if we've reached the max
+      if (selectedNumbers.length >= MAX_SELECTABLE_SPOTS) {
+        // Already have maximum numbers selected, don't add more
         return;
       }
 
