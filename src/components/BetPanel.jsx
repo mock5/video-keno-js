@@ -1,13 +1,12 @@
 import '../styles/BetPanel.css';
+import { MAX_BET_AMOUNT, MAX_SELECTABLE_SPOTS, GAME_STATES } from '../utils/gameConstants';
 
 const BetPanel = ({
   betAmount,
   setBetAmount,
   selectedNumbers,
   setSelectedNumbers,
-  maxSelections,
   setMaxSelections,
-  onPlay,
   gameState,
   credits,
   onQuickPick,
@@ -17,25 +16,25 @@ const BetPanel = ({
 }) => {
 
   const handleBetOneClick = () => {
-    if (gameState !== 'playing') {
-      // Increase bet by 1, up to max of 10
-      setBetAmount(prev => Math.min(prev + 1, 10));
+    if (gameState !== GAME_STATES.PLAYING) {
+      // Increase bet by 1, up to max
+      setBetAmount(prev => Math.min(prev + 1, MAX_BET_AMOUNT));
     }
   };
 
   const handleBetMaxClick = () => {
-    if (gameState !== 'playing') {
-      // Set bet to maximum (10)
-      setBetAmount(10);
+    if (gameState !== GAME_STATES.PLAYING) {
+      // Set bet to maximum
+      setBetAmount(MAX_BET_AMOUNT);
     }
   };
 
   const handleClear = () => {
-    if (gameState !== 'playing') {
+    if (gameState !== GAME_STATES.PLAYING) {
       // Clear selected numbers
       setSelectedNumbers([]);
-      // Reset maxSelections to default 10
-      setMaxSelections(10);
+      // Reset maxSelections to default
+      setMaxSelections(MAX_SELECTABLE_SPOTS);
       // Clear drawn numbers as well
       setDrawnNumbers([]);
       // Reset matches and payout
@@ -50,7 +49,7 @@ const BetPanel = ({
         <button
           className="bet-one-btn"
           onClick={handleBetOneClick}
-          disabled={gameState === 'playing' || credits < 1 || betAmount >= 10}
+          disabled={gameState === GAME_STATES.PLAYING || credits < 1 || betAmount >= MAX_BET_AMOUNT}
         >
           BET ONE
         </button>
@@ -58,7 +57,7 @@ const BetPanel = ({
         <button
           className="bet-max-btn"
           onClick={handleBetMaxClick}
-          disabled={gameState === 'playing' || credits < 10 || betAmount === 10}
+          disabled={gameState === GAME_STATES.PLAYING || credits < MAX_BET_AMOUNT || betAmount === MAX_BET_AMOUNT}
         >
           BET MAX
         </button>
@@ -68,7 +67,7 @@ const BetPanel = ({
         <button
           className="quick-pick-btn"
           onClick={onQuickPick}
-          disabled={gameState === 'playing'}
+          disabled={gameState === GAME_STATES.PLAYING}
         >
           QUICK PICK
         </button>
@@ -76,7 +75,7 @@ const BetPanel = ({
         <button
           className="clear-btn"
           onClick={handleClear}
-          disabled={gameState === 'playing' || selectedNumbers.length === 0}
+          disabled={gameState === GAME_STATES.PLAYING || selectedNumbers.length === 0}
         >
           CLEAR
         </button>
